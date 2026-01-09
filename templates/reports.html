@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<h2>Daily Sales Report</h2>
+
+<table>
+<tr>
+    <th>Date</th>
+    <th>Total Sales</th>
+</tr>
+{% for d in daily %}
+<tr>
+    <td>{{ d[0] }}</td>
+    <td>₹ {{ d[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

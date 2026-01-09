@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Profit Report{% endblock %}
+
+{% block content %}
+<h2>Profit Report</h2>
+
+<table>
+<tr>
+    <th>Product</th>
+    <th>Sold Qty</th>
+    <th>Cost</th>
+    <th>Revenue</th>
+    <th>Profit</th>
+</tr>
+{% for r in report %}
+<tr>
+    <td>{{ r[0] }}</td>
+    <td>{{ r[1] }}</td>
+    <td>₹ {{ r[2] }}</td>
+    <td>₹ {{ r[3] }}</td>
+    <td><b>₹ {{ r[4] }}</b></td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

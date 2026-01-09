@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<h2>Product Entry</h2>
+
+<!-- ================= UPDATE EXISTING PRODUCT ================= -->
+<h4>Update Existing Product</h4>
+
+<input type="hidden" name="product_id" id="product_id">
+
+<input type="text" id="productSearch"
+       placeholder="Type Part No or Product Name"
+       autocomplete="off">
+
+<div id="suggestions"
+     style="border:1px solid #ccc; max-height:150px; overflow:auto;"></div>
+
+<form method="POST" action="/update-product">
+    <input type="hidden" name="product_id" id="selectedProductId">
+
+    <input name="mrp" placeholder="Update MRP">
+    <input name="sell_price" placeholder="Update Sell Price">
+    <input name="stock_qty" placeholder="Add Stock Qty">
+    <input name="gst_percent" placeholder="GST % (optional)">
+
+    <button type="submit">Update Product</button>
+</form>
+
+
+<!-- ================= CREATE NEW PRODUCT ================= -->
+<h4>Create New Product</h4>
+
+<form method="POST">
+    <input name="part_no" placeholder="Part No" required>
+    <input name="barcode" placeholder="Barcode (optional)">
+    <input name="part_name" placeholder="Part Name" required>
+    <input name="mrp" placeholder="MRP" required>
+    <input name="sell_price" placeholder="Sell Price" required>
+    <input name="min_stock" placeholder="Minimum Stock" required>
+    <input name="stock_qty" placeholder="Stock Qty" required>
+    <input name="gst_percent" placeholder="GST % (optional)">
+
+    <button type="submit">Add New Product</button>
+</form>
+
+<hr>
+
+<!-- ================= PRODUCT LIST ================= -->
+<h4>Current Products</h4>
+
+<table>
+    <tr>
+        <th>Part No</th>
+        <th>Part Name</th>
+        <th>MRP</th>
+        <th>Sell Price</th>
+        <th>Stock</th>
+        <th>Status</th>
+    </tr>
+
+    {% for p in products %}
+    <tr>
+        <td>{{ p[1] }}</td>
+        <td>{{ p[2] }}</td>
+        <td>{{ p[3] }}</td>
+        <td>{{ p[4] }}</td>
+        <td>{{ p[5] }}</td>
+        <td>
+            {% if p[5] <= p[6] %}
+                <span style="color:red;font-weight:bold;">LOW STOCK</span>
+            {% else %}
+                OK
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- ================= SEARCH SCRIPT ================= -->
+<script>
+const searchInput = document.getElementById("productSearch");
+const suggestions = document.getElementById("suggestions");
+const productIdInput = document.getElementById("selectedProductId");
+
+searchInput.addEventListener("keyup", async () => {
+    const q = searchInput.value.trim();
+    suggestions.innerHTML = "";
+
+    if (q.length < 1) return;
+
+    const res = await fetch(`/search-products?q=${q}`);
+    const data = await res.json();
+
+    data.forEach(p => {
+        const div = document.createElement("div");
+        div.style.padding = "6px";
+        div.style.cursor = "pointer";
+        div.innerHTML = `<b>${p.part_no}</b> - ${p.part_name}
+                         <small>(Stock: ${p.stock})</small>`;
+
+        div.onclick = () => {
+            searchInput.value = `${p.part_no} - ${p.part_name}`;
+            productIdInput.value = p.id;
+            suggestions.innerHTML = "";
+        };
+
+        suggestions.appendChild(div);
+    });
+});
+</script>
+
+
+{% endblock %}

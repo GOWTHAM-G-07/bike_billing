@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Dashboard</h2>
+
+<p><b>Today Sales:</b> ₹ {{ today_sales }}</p>
+<p><b>Total Invoices:</b> {{ total_invoices }}</p>
+
+<h3>Low Stock Items</h3>
+<table border="1">
+<tr>
+    <th>Part</th>
+    <th>Stock</th>
+</tr>
+{% for item in low_stock %}
+<tr>
+    <td>{{ item[0] }}</td>
+    <td>{{ item[1] }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<br>
+<a href="/products">Products</a> |
+<a href="/billing">Billing</a> |
+<a href="/reports">Reports</a> |
+<a href="/logout">Logout</a>
+
+</body>
+</html>
+

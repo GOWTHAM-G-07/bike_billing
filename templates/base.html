@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Bike Billing System{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+:root {
+    --bg: #f4f6f8;
+    --card: #ffffff;
+    --text: #000000;
+    --primary: #007bff;
+    --primary-hover: #0056b3;
+    --danger: #dc3545;
+}
+
+body.dark {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #ffffff;
+    --primary: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --danger: #ff4d4d;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 10px;
+    width: 420px;
+    margin-top: 40px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+a.button {
+    display: block;
+    margin: 10px 0;
+    padding: 12px;
+    text-decoration: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: center;
+}
+
+a.button:hover {
+    background: var(--primary-hover);
+}
+
+.danger {
+    background: var(--danger);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #777;
+    padding: 8px;
+    text-align: center;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+}
+
+button {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.toggle {
+    cursor: pointer;
+    font-size: 18px;
+}
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 220px;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cbd5f5;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.nav-link:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.logout {
+    margin-top: auto;
+    background: #7f1d1d;
+    color: white;
+}
+
+.theme-toggle {
+    margin-top: 15px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    background: var(--bg);
+    overflow-y: auto;
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    {% if session.get('user') %}
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">Bike POS</div>
+
+        <a href="/" class="nav-link">
+            <i class="fa fa-house"></i> Home
+        </a>
+
+        <a href="/products" class="nav-link">
+            <i class="fa fa-box"></i> Products
+        </a>
+
+        <a href="/billing" class="nav-link">
+            <i class="fa fa-receipt"></i> Billing
+        </a>
+
+        <a href="/reports" class="nav-link">
+            <i class="fa fa-chart-line"></i> Reports
+        </a>
+
+        <a href="/logout" class="nav-link logout">
+            <i class="fa fa-sign-out-alt"></i> Logout
+        </a>
+
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <i class="fa fa-moon"></i>
+        </div>
+    </aside>
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+<script>
+const body = document.body;
+const theme = localStorage.getItem("theme");
+
+if (theme === "dark") {
+    body.classList.add("dark");
+}
+
+function toggleTheme() {
+    body.classList.toggle("dark");
+    localStorage.setItem(
+        "theme",
+        body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+</script>
+
+</body>
+
+</html>
