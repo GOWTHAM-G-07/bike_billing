@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Voucher{% endblock %}
+
+{% block content %}
+<h2>Voucher Entry</h2>
+
+<form method="POST">
+<table class="entry-table">
+<tr>
+    <th>Type</th>
+    <th>Particulars</th>
+    <th>Debit</th>
+    <th>Credit</th>
+</tr>
+</table>
+
+<textarea name="narration" placeholder="Narration"></textarea>
+
+<button type="submit">Save</button>
+</form>
+{% endblock %}

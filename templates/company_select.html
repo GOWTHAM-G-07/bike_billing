@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Company Selection{% endblock %}
+
+{% block content %}
+<h2>Company Selection</h2>
+
+<table class="list-table">
+<tr>
+    <th>Company</th>
+    <th>Code</th>
+    <th>Period</th>
+</tr>
+
+{% for c in companies %}
+<tr onclick="location.href='/dashboard'">
+    <td>{{ c.name }}</td>
+    <td>{{ c.code }}</td>
+    <td>{{ c.from }} - {{ c.to }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

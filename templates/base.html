@@ -1,136 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{% block title %}Bike Billing System{% endblock %}</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bike POS{% endblock %}</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- Optional external CSS (kept for future use) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <style>
+/* ================= THEME VARIABLES ================= */
 :root {
     --bg: #f4f6f8;
     --card: #ffffff;
     --text: #000000;
-    --primary: #007bff;
-    --primary-hover: #0056b3;
-    --danger: #dc3545;
+    --primary: #2563eb;
+    --primary-hover: #1e40af;
+    --danger: #dc2626;
+    --sidebar: #0f172a;
+    --sidebar-hover: #1e293b;
 }
 
 body.dark {
-    --bg: #121212;
-    --card: #1e1e1e;
-    --text: #ffffff;
-    --primary: #0d6efd;
-    --primary-hover: #0b5ed7;
-    --danger: #ff4d4d;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e5e7eb;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --danger: #ef4444;
+}
+
+/* ================= GLOBAL ================= */
+* {
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
 }
 
-.container {
-    background: var(--card);
-    padding: 40px;
-    border-radius: 10px;
-    width: 420px;
-    margin-top: 40px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-a.button {
-    display: block;
-    margin: 10px 0;
-    padding: 12px;
-    text-decoration: none;
-    background: var(--primary);
-    color: white;
-    border-radius: 6px;
-    font-size: 16px;
-    text-align: center;
-}
-
-a.button:hover {
-    background: var(--primary-hover);
-}
-
-.danger {
-    background: var(--danger);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th, td {
-    border: 1px solid #777;
-    padding: 8px;
-    text-align: center;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0;
-}
-
-button {
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-
-.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.nav a {
-    text-decoration: none;
-    color: var(--primary);
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.toggle {
-    cursor: pointer;
-    font-size: 18px;
-}
+/* ================= LAYOUT ================= */
 .app-layout {
     display: flex;
     min-height: 100vh;
     width: 100%;
 }
 
+/* ================= SIDEBAR ================= */
 .sidebar {
-    width: 220px;
-    background: #0f172a;
+    width: 230px;
+    background: var(--sidebar);
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 15px;
 }
 
 .brand {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 30px;
@@ -139,16 +72,21 @@ button {
 .nav-link {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     color: #cbd5f5;
     text-decoration: none;
-    padding: 12px;
+    padding: 12px 14px;
     border-radius: 8px;
     margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.nav-link i {
+    width: 18px;
 }
 
 .nav-link:hover {
-    background: #1e293b;
+    background: var(--sidebar-hover);
     color: white;
 }
 
@@ -158,20 +96,88 @@ button {
     color: white;
 }
 
+.logout:hover {
+    background: #991b1b;
+}
+
+/* ================= THEME TOGGLE ================= */
 .theme-toggle {
-    margin-top: 15px;
+    margin-top: 20px;
     text-align: center;
     cursor: pointer;
     font-size: 18px;
+    color: #cbd5f5;
 }
 
+.theme-toggle:hover {
+    color: white;
+}
+
+/* ================= MAIN CONTENT ================= */
 .main-content {
     flex: 1;
     padding: 30px;
-    background: var(--bg);
     overflow-y: auto;
 }
 
+/* ================= COMMON UI ================= */
+.card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+h2, h3, h4 {
+    margin-top: 0;
+}
+
+input, select, button, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+}
+
+button {
+    background: #16a34a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #15803d;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #888;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: #e5e7eb;
+}
+
+body.dark th {
+    background: #334155;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
     </style>
 </head>
 
@@ -180,34 +186,8 @@ button {
 <div class="app-layout">
 
     {% if session.get('user') %}
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="brand">Bike POS</div>
-
-        <a href="/" class="nav-link">
-            <i class="fa fa-house"></i> Home
-        </a>
-
-        <a href="/products" class="nav-link">
-            <i class="fa fa-box"></i> Products
-        </a>
-
-        <a href="/billing" class="nav-link">
-            <i class="fa fa-receipt"></i> Billing
-        </a>
-
-        <a href="/reports" class="nav-link">
-            <i class="fa fa-chart-line"></i> Reports
-        </a>
-
-        <a href="/logout" class="nav-link logout">
-            <i class="fa fa-sign-out-alt"></i> Logout
-        </a>
-
-        <div class="theme-toggle" onclick="toggleTheme()">
-            <i class="fa fa-moon"></i>
-        </div>
-    </aside>
+        <!-- SIDEBAR / NAVIGATION -->
+        {% include "navigation.html" %}
     {% endif %}
 
     <!-- MAIN CONTENT -->
@@ -219,9 +199,9 @@ button {
 
 <script>
 const body = document.body;
-const theme = localStorage.getItem("theme");
+const savedTheme = localStorage.getItem("theme");
 
-if (theme === "dark") {
+if (savedTheme === "dark") {
     body.classList.add("dark");
 }
 
@@ -235,5 +215,4 @@ function toggleTheme() {
 </script>
 
 </body>
-
 </html>

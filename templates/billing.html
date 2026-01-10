@@ -4,26 +4,24 @@
 {% block content %}
 <h2>Billing</h2>
 
-<!-- ================= PRODUCT SEARCH ================= -->
+<!-- ================= SEARCH INPUT ================= -->
 <input type="text"
-       id="search"
-       placeholder="Search by Part No or Product Name"
+       id="searchInput"
+       placeholder="Type Part No or Product Name"
        autocomplete="off">
 
-<div id="results"
-     style="border:1px solid #ccc; max-height:150px; overflow:auto;"></div>
+<div id="searchResults"
+     style="border:1px solid #444; margin-top:6px; max-height:180px; overflow:auto;">
+</div>
 
-<!-- ================= BILLING FORM ================= -->
-<form method="POST">
+<!-- ================= PRODUCT INFO ================= -->
+<div id="productInfo"
+     style="margin:8px 0; font-weight:bold; color:#9ef;">
+</div>
 
-    <select name="product_id" required>
-        <option value="">-- Select Product --</option>
-        {% for p in products %}
-        <option value="{{ p[0] }}">
-            {{ p[1] }} - {{ p[2] }} (Stock {{ p[4] }})
-        </option>
-        {% endfor %}
-    </select>
+<!-- ================= ADD ITEM ================= -->
+<form method="POST" action="/billing/add">
+    <input type="hidden" name="product_id" id="productId">
 
     <input type="number"
            name="quantity"
@@ -53,20 +51,20 @@
 
 <p><b>Grand Total:</b> ₹ {{ grand_total }}</p>
 
-<!-- ================= FINALIZE ================= -->
 <form method="POST" action="/finalize">
     <button>Finalize Bill</button>
 </form>
 
 <!-- ================= SEARCH SCRIPT ================= -->
 <script>
-const searchInput = document.getElementById("search");
-const resultsDiv = document.getElementById("results");
-const productSelect = document.querySelector("select[name='product_id']");
+const input = document.getElementById("searchInput");
+const results = document.getElementById("searchResults");
+const info = document.getElementById("productInfo");
+const pid = document.getElementById("productId");
 
-searchInput.addEventListener("keyup", async () => {
-    const q = searchInput.value.trim();
-    resultsDiv.innerHTML = "";
+input.addEventListener("keyup", async () => {
+    const q = input.value.trim();
+    results.innerHTML = "";
 
     if (q.length < 1) return;
 
@@ -77,18 +75,21 @@ searchInput.addEventListener("keyup", async () => {
         const div = document.createElement("div");
         div.style.padding = "6px";
         div.style.cursor = "pointer";
+        div.style.borderBottom = "1px solid #333";
+
         div.innerHTML = `
-            <b>${p.part_no}</b> - ${p.part_name}
-            <small>(Stock: ${p.stock})</small>
+            <b>${p.part_no}</b> - ${p.name}
+            <span style="float:right">Stock: ${p.stock}</span>
         `;
 
         div.onclick = () => {
-            productSelect.value = p.id;
-            searchInput.value = `${p.part_no} - ${p.part_name}`;
-            resultsDiv.innerHTML = "";
+            pid.value = p.id;
+            input.value = `${p.part_no} - ${p.name}`;
+            info.innerHTML = `Selected: ${p.part_no} - ${p.name} (₹${p.price})`;
+            results.innerHTML = "";
         };
 
-        resultsDiv.appendChild(div);
+        results.appendChild(div);
     });
 });
 </script>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Stock Summary{% endblock %}
+
+{% block content %}
+<h2>Stock Summary</h2>
+
+<table class="list-table">
+<tr>
+    <th>Part No</th>
+    <th>Name</th>
+    <th>Stock</th>
+</tr>
+
+{% for p in products %}
+<tr>
+    <td>{{ p.part_no }}</td>
+    <td>{{ p.part_name }}</td>
+    <td>{{ p.stock_qty }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

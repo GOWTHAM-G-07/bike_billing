@@ -1,22 +1,55 @@
-{% extends "base.html" %}
-{% block title %}Home{% endblock %}
+<div class="sidebar">
+    <h2>Bike POS</h2>
 
-{% block content %}
-<h2>Bike Billing System</h2>
+    <ul>
+        <!-- Dashboard -->
+        <li>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        </li>
 
-<a href="/products">Products</a>
-<a href="/billing">Billing</a>
-<a href="/reports">Reports</a>
-<a href="/logout" class="logout">Logout</a>
-{% endblock %}
-<a href="/products" class="button">
-    <i class="fa fa-box"></i> Products
-</a>
+        <!-- Sales -->
+        <li class="section">Sales</li>
+        <li>
+            <a href="{{ url_for('billing') }}">Sales Create</a>
+        </li>
+        <li>
+            <a href="{{ url_for('sales_display') }}">Sales Display</a>
+        </li>
+        <li>
+            <a href="{{ url_for('invoice_print') }}">Sales Print</a>
+        </li>
 
-<a href="/billing" class="button">
-    <i class="fa fa-receipt"></i> Billing
-</a>
+        <!-- Purchase -->
+        <li class="section">Purchase</li>
+        <li>
+            <a href="{{ url_for('purchase_create') }}">Purchase Create</a>
+        </li>
 
-<a href="/reports" class="button">
-    <i class="fa fa-chart-line"></i> Reports
-</a>
+        <!-- Products -->
+        <li class="section">Products</li>
+        <li>
+            <a href="{{ url_for('products') }}">Product Entry</a>
+        </li>
+        <li>
+            <a href="{{ url_for('stock_summary') }}">Stock Summary</a>
+        </li>
+
+        <!-- Accounts -->
+        <li class="section">Accounts</li>
+        <li>
+            <a href="{{ url_for('voucher') }}">Voucher Entry</a>
+        </li>
+
+        <!-- Reports -->
+        <li class="section">Reports</li>
+        <li>
+            <a href="{{ url_for('reports') }}">Reports</a>
+        </li>
+
+        <!-- System -->
+        <li class="section">System</li>
+        <li>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </li>
+    </ul>
+</div>

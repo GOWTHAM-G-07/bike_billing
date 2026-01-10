@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Purchase Entry{% endblock %}
+
+{% block content %}
+<h2>Purchase Creation</h2>
+
+<form method="POST">
+    <label>Supplier</label>
+    <input name="supplier">
+
+    <label>Invoice No</label>
+    <input name="invoice_no">
+
+    <table class="entry-table">
+        <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+        </tr>
+    </table>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

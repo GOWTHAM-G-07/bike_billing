@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sales Creation{% endblock %}
+
+{% block content %}
+<h2>Sales Creation (Tax Invoice)</h2>
+
+<form method="POST">
+    <label>Customer</label>
+    <input name="customer">
+
+    <label>Bill No</label>
+    <input name="bill_no">
+
+    <label>Date</label>
+    <input value="{{ current_date }}" readonly>
+
+    <table class="entry-table">
+        <tr>
+            <th>Part No</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+        </tr>
+    </table>
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

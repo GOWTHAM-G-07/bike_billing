@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+</head>
+<body onload="window.print()">
+
+<h2>SRI VINAYAGA AUTO PARTS</h2>
+<p>Invoice No: {{ invoice.no }}</p>
+
+<table border="1" width="100%">
+<tr>
+    <th>Part No</th>
+    <th>Description</th>
+    <th>Qty</th>
+    <th>Rate</th>
+    <th>Amount</th>
+</tr>
+{% for i in invoice.items %}
+<tr>
+    <td>{{ i.part_no }}</td>
+    <td>{{ i.name }}</td>
+    <td>{{ i.qty }}</td>
+    <td>{{ i.rate }}</td>
+    <td>{{ i.amount }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Total: {{ invoice.total }}</h3>
+
+</body>
+</html>
