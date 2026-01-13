@@ -26,6 +26,13 @@
                 <i class="fa fa-sign-in-alt"></i> Login
             </button>
         </form>
+        
+<div style="margin-top:12px; text-align:center;">
+    <a href="{{ url_for('reset_password') }}"
+       style="color:#9ef; text-decoration:none; font-size:14px;">
+        Forgot / Reset Password?
+    </a>
+</div>
 
         {% if error %}
         <p style="color:red;text-align:center;margin-top:12px;">

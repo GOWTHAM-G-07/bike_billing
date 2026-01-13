@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from datetime import datetime
+from werkzeug.security import generate_password_hash
 import os
 import config
 
@@ -90,7 +91,9 @@ def logout():
 def dashboard():
     if 'user' not in session:
         return redirect('/login')
-    return render_template('navigation.html')
+    return render_template('dashboard.html')
+
+
 
 # -------------------------------------------------
 # PRODUCTS
@@ -323,10 +326,6 @@ def api_product():
 def sales_display():
     return render_template('sales_display.html')
 
-@app.route('/invoice-print')
-def invoice_print():
-    return render_template('invoice_print.html')
-
 @app.route('/purchase-create')
 def purchase_create():
     return render_template('purchase_create.html')
@@ -343,7 +342,89 @@ def reports():
     if 'user' not in session:
         return redirect('/login')
     return render_template('reports.html')
+@app.route('/profit-report')
+def profit_report():
+    if 'user' not in session:
+        return redirect('/login')
+    return render_template('profit_report.html')
+@app.route('/invoice-print/<invoice_no>')
+def invoice_print(invoice_no):
+    if 'user' not in session:
+        return redirect('/login')
 
+    cur = mysql.connection.cursor(dictionary=True)
+
+    cur.execute("""
+        SELECT invoice_no, total_amount, created_at
+        FROM invoices
+        WHERE invoice_no = %s
+    """, (invoice_no,))
+    invoice = cur.fetchone()
+
+    if not invoice:
+        cur.close()
+        return "Invoice not found", 404
+
+    cur.execute("""
+        SELECT p.part_name, ii.quantity, ii.price, ii.total
+        FROM invoice_items ii
+        JOIN products p ON ii.product_id = p.id
+        WHERE ii.invoice_id = (
+            SELECT id FROM invoices WHERE invoice_no = %s
+        )
+    """, (invoice_no,))
+    items = cur.fetchall()
+
+    cur.close()
+
+    return render_template(
+        'invoice_print.html',
+        invoice=invoice,
+        items=items
+    )
+
+
+#---------------------------------------------------
+# RESET PASSWORD
+#--------------------------------------------------------
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        username = request.form['username']
+        new_password = request.form['new_password']
+
+        password_hash = generate_password_hash(new_password)
+
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE users
+            SET password_hash = %s
+            WHERE username = %s
+        """, (password_hash, username))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect('/login')
+
+    return render_template('reset_password.html')
+# -------------------------------------------------
+# INVOICE LIST (SALES PRINT)
+# -------------------------------------------------
+@app.route('/invoice-list')
+def invoice_list():
+    if 'user' not in session:
+        return redirect('/login')
+
+    cur = mysql.connection.cursor()
+    cur.execute("""
+        SELECT invoice_no, total_amount, created_at
+        FROM invoices
+        ORDER BY created_at DESC
+    """)
+    invoices = cur.fetchall()
+    cur.close()
+
+    return render_template('invoice_list.html', invoices=invoices)
 
 # -------------------------------------------------
 # RUN

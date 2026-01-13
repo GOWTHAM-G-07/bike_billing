@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Invoice List{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Invoice List</h2>
+
+    {% if invoices %}
+    <table>
+        <tr>
+            <th>Invoice No</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Print</th>
+        </tr>
+
+        {% for inv in invoices %}
+        <tr>
+            <td>{{ inv[0] }}</td>
+            <td>{{ inv[2].strftime('%d-%m-%Y') }}</td>
+            <td>₹ {{ inv[1] }}</td>
+            <td>
+                <a href="{{ url_for('invoice_pdf', invoice_no=inv[0]) }}" target="_blank">
+                    Print
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No invoices found.</p>
+    {% endif %}
+</div>
+{% endblock %}

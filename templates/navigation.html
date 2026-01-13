@@ -2,54 +2,31 @@
     <h2>Bike POS</h2>
 
     <ul>
-        <!-- Dashboard -->
-        <li>
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        </li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
 
-        <!-- Sales -->
         <li class="section">Sales</li>
-        <li>
-            <a href="{{ url_for('billing') }}">Sales Create</a>
-        </li>
-        <li>
-            <a href="{{ url_for('sales_display') }}">Sales Display</a>
-        </li>
-        <li>
-            <a href="{{ url_for('invoice_print') }}">Sales Print</a>
-        </li>
+        <li><a href="{{ url_for('billing') }}">Sales Create</a></li>
+        <li><a href="{{ url_for('sales_display') }}">Sales Display</a></li>
+        <li><a href="{{ url_for('invoice_list') }}">Sales Print</a></li>
+        <li><a href="{{ url_for('invoice_list') }}">Sales Print</a></li>
 
-        <!-- Purchase -->
         <li class="section">Purchase</li>
-        <li>
-            <a href="{{ url_for('purchase_create') }}">Purchase Create</a>
-        </li>
+        <li><a href="{{ url_for('purchase_create') }}">Purchase Create</a></li>
 
-        <!-- Products -->
         <li class="section">Products</li>
-        <li>
-            <a href="{{ url_for('products') }}">Product Entry</a>
-        </li>
-        <li>
-            <a href="{{ url_for('stock_summary') }}">Stock Summary</a>
-        </li>
+        <li><a href="{{ url_for('products') }}">Product Entry</a></li>
+        <li><a href="{{ url_for('stock_summary') }}">Stock Summary</a></li>
 
-        <!-- Accounts -->
         <li class="section">Accounts</li>
-        <li>
-            <a href="{{ url_for('voucher') }}">Voucher Entry</a>
-        </li>
+        <li><a href="{{ url_for('voucher') }}">Voucher Entry</a></li>
 
-        <!-- Reports -->
         <li class="section">Reports</li>
-        <li>
-            <a href="{{ url_for('reports') }}">Reports</a>
-        </li>
+        <li><a href="{{ url_for('reports') }}">Reports</a></li>
+        <li><a href="{{ url_for('profit_report') }}">Profit Report</a></li>
 
-        <!-- System -->
+        <!-- ✅ SYSTEM -->
         <li class="section">System</li>
-        <li>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        </li>
+        <li><a href="{{ url_for('reset_password') }}">Reset Password</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
 </div>

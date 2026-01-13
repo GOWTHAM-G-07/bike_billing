@@ -8,7 +8,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Optional external CSS (kept for future use) -->
+    <!-- External CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <style>
@@ -54,63 +54,48 @@ body {
 
 /* ================= SIDEBAR ================= */
 .sidebar {
-    width: 230px;
-    background: var(--sidebar);
+    width: 260px;
+    background: #0b3d0b;
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 20px 15px;
+    padding: 10px;
 }
 
-.brand {
-    font-size: 22px;
+.sidebar .user-box {
+    background: #0f5c0f;
+    padding: 10px;
     font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #cbd5f5;
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 6px;
+}
+
+.sidebar li.section {
+    background: #1e7c1e;
+    padding: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.sidebar a {
+    display: block;
+    background: #f0f0f0;
+    color: black;
+    padding: 6px;
     text-decoration: none;
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 15px;
+    border-radius: 2px;
 }
 
-.nav-link i {
-    width: 18px;
-}
-
-.nav-link:hover {
-    background: var(--sidebar-hover);
-    color: white;
-}
-
-.logout {
-    margin-top: auto;
-    background: #7f1d1d;
-    color: white;
-}
-
-.logout:hover {
-    background: #991b1b;
-}
-
-/* ================= THEME TOGGLE ================= */
-.theme-toggle {
-    margin-top: 20px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 18px;
-    color: #cbd5f5;
-}
-
-.theme-toggle:hover {
-    color: white;
+.sidebar a:hover {
+    background: #cdeccd;
 }
 
 /* ================= MAIN CONTENT ================= */
@@ -118,6 +103,7 @@ body {
     flex: 1;
     padding: 30px;
     overflow-y: auto;
+    background: #ffffff;
 }
 
 /* ================= COMMON UI ================= */
@@ -126,10 +112,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 12px rgba(0,0,0,0.15);
-}
-
-h2, h3, h4 {
-    margin-top: 0;
 }
 
 input, select, button, textarea {
@@ -168,10 +150,6 @@ th {
     background: #e5e7eb;
 }
 
-body.dark th {
-    background: #334155;
-}
-
 /* ================= MOBILE ================= */
 @media (max-width: 768px) {
     .sidebar {
@@ -186,11 +164,9 @@ body.dark th {
 <div class="app-layout">
 
     {% if session.get('user') %}
-        <!-- SIDEBAR / NAVIGATION -->
         {% include "navigation.html" %}
     {% endif %}
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>

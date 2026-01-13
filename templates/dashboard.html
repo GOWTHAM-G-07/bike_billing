@@ -1,53 +1,10 @@
 {% extends "base.html" %}
+
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-
-<h2 style="margin-bottom:20px;">
-    <i class="fa fa-chart-line"></i> Dashboard
-</h2>
-
-<!-- SUMMARY CARDS -->
-<div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:30px;">
-
-    <div class="card" style="flex:1;min-width:200px;">
-        <h4>Today Sales</h4>
-        <h2 style="color:green;">₹ {{ today_sales }}</h2>
-    </div>
-
-    <div class="card" style="flex:1;min-width:200px;">
-        <h4>Total Invoices</h4>
-        <h2>{{ total_invoices }}</h2>
-    </div>
-
-</div>
-
-<!-- LOW STOCK TABLE -->
 <div class="card">
-    <h3 style="margin-bottom:15px;">
-        <i class="fa fa-exclamation-triangle" style="color:red;"></i>
-        Low Stock Items
-    </h3>
-
-    <table>
-        <tr>
-            <th>Part</th>
-            <th>Stock</th>
-        </tr>
-
-        {% for item in low_stock %}
-        <tr>
-            <td>{{ item[0] }}</td>
-            <td style="color:red;font-weight:bold;">
-                {{ item[1] }}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="2">No low stock items</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <h2>Welcome, Admin</h2>
+    <p>Select an option from the left menu.</p>
 </div>
-
 {% endblock %}
